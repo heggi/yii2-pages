@@ -1,0 +1,23 @@
+{
+    "name": "heggi/yii2-pages",
+    "description": "Extension for editing static pages like 'About' etc.",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","pages"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "heggi",
+            "email": "heggi@fhead.org"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0.0",
+        "2amigos/yii2-ckeditor-widget": "^2.1.1",
+        "mihaildev/yii2-elfinder": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "heggi\\yii2pages\\": ""
+        }
+    }
+}
