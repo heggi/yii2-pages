@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use mihaildev\elfinder\ElFinder;
 use dosamigos\ckeditor\CKEditor;
 use yii\helpers\ArrayHelper;
+use heggi\yii2files\widgets\SingleFileWidget;
 
 /* @var $this yii\web\View */
 /* @var $model heggi\yii2pages\models\Page */
@@ -22,6 +23,10 @@ $module = Yii::$app->controller->module;
                 'readonly' => !$module->allowUpdateSlug && !$model->isNewRecord,
             ]) ?>
 
+            <?php if($module->showExcerpt) : ?>
+                <?= $form->field($model, 'excerpt')->textarea(['rows' => 6]) ?>
+            <?php endif ?>
+
             <?php if($module->ckeditor === false) : ?>
                 <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
             <?php else : ?>
@@ -32,12 +37,19 @@ $module = Yii::$app->controller->module;
             <?php endif ?>
         </div>
         <div class="col-xs-3">
-            <?= $form->field($model, 'category')->dropDownList(
-                ArrayHelper::getColumn($module->categories, 'label'), 
-                [
-                    'disabled' => !$module->allowChangeCategory && !$model->isNewRecord
-                ]
-            ) ?>
+            <?php if(!empty($module->categories)) : ?>
+                <?= $form->field($model, 'category')->dropDownList(
+                    ArrayHelper::getColumn($module->categories, 'label'), 
+                    [
+                        'disabled' => !$module->allowChangeCategory && !$model->isNewRecord
+                    ]
+                ) ?>
+            <?php endif ?>
+
+            <?= $form->field($model, "picture")->widget(SingleFileWidget::className(), [
+                'key' => 'picture',
+                'delete' => "deletePicture",
+            ])->label('Изображения товара') ?>
             
             <div class="form-group">
                 <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>

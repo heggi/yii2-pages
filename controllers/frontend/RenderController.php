@@ -17,8 +17,13 @@ class RenderController extends Controller {
             throw new NotFoundHttpException('Запрошенная страница не существует');
         }
 
+        //view for category
         $this->layout = ArrayHelper::getValue($this->module->categories, $category.'.layout', $this->layout);
         $view = ArrayHelper::getValue($this->module->categories, $category.'.view', $this->module->defaultView);
+
+        //view for personal page
+        $this->layout = ArrayHelper::getValue($this->module->pages, $category.'/'. $page .'.layout', $this->layout);
+        $view = ArrayHelper::getValue($this->module->pages, $category.'/'. $page .'.view', $view);
 
         return $this->render($view, compact('model'));
     }
